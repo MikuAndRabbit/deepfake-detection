@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
+
+# log file
+*.log
+
+# video and image
+*.mp4
+*.png
+*.jpg
+
+# frame json file
+/data/frameinfo/*.json
+
+# label csv file
+/data/label/*.csv
+
+# old model test
+old/
+
+# model checkpoint
+*.pth
+
+# mac
+.DS_Store
+
+# test
+test.py
