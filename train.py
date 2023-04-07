@@ -134,10 +134,10 @@ if __name__ == "__main__":
     # 获取标签
     video_label_path = os.path.abspath(VIDEO_LABEL_RELPATH)
     labels_path = os.path.abspath(VIDEO_LABEL_RELPATH)    
-    data = pd.read_csv('data.csv', header=None, names=['filename', 'label'])
+    data = pd.read_csv(VIDEO_LABEL_RELPATH, header=None, names=['filename', 'label'])
     data_dict = dict(zip(data['filename'], data['label']))
     print(len(data_dict))
     
     # 构建DataLoader
-
+    
     
