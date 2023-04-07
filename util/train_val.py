@@ -31,21 +31,6 @@ def check_correct(preds, labels):
     return correct, positive_class, negative_class
 
 
-def get_device():
-    """获取设备
-
-    Returns:
-        device: 设备
-    """
-    if torch.cuda.is_available():
-        device = torch.device("cuda")
-    elif is_available() and is_built():
-        device = torch.device('mps')
-    else:
-        device = torch.device("cpu")
-    return device
-
-
 def _load_model(config_path: str, checkpoint_path: Optional[str] = None) -> CrossEfficientViT:
     """加载模型
 

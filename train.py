@@ -106,15 +106,15 @@ if __name__ == "__main__":
     # TODO 进行训练
     # 常量
     # 路径数据
-    VIDEO_DATASET_RELPATH: Final[str] = './data/video'
-    VIDEO_LABEL_RELPATH: Final[str] = './data/label/label.csv'
-    FRAME_JSON_RELPATH: Final[str] = './data/frameinfo'
-    FRAME_IMG_RELPATH: Final[str] = './data/frame'
+    VIDEO_DATASET_RELPATH = './data/video'
+    VIDEO_LABEL_RELPATH = './data/label/label.csv'
+    FRAME_JSON_RELPATH = './data/frameinfo'
+    FRAME_IMG_RELPATH = './data/frame'
     # 数据集控制
-    HAVE_FACE_JSON: Final[bool] = False
-    HAVE_FACE_IMG: Final[bool] = False
+    HAVE_FACE_JSON = True
+    HAVE_FACE_IMG = True
     # 日志路径配置
-    TRAIN_LOG_POS: Final[str] = './log'
+    TRAIN_LOG_POS = './log'
     
     # 配置日志信息
     # 配置日志记录器
