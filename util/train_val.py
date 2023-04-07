@@ -5,7 +5,6 @@ from torch.optim.optimizer import Optimizer
 from torch.nn.modules.loss import _Loss
 import numpy as np
 from typing import Tuple, Union, List, Optional
-from torch.backends.mps import is_available, is_built
 from model.cross_vit import CrossEfficientViT
 import yaml
 
