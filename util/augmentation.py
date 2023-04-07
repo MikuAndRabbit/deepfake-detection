@@ -2,7 +2,8 @@ import torch
 from torch.utils.data import DataLoader, TensorDataset, Dataset
 import cv2
 import numpy as np
-from typing import List, Literal, Union, Optional
+from typing import List, Union, Optional
+from tqdm import tqdm
 from torchvision.transforms import ToTensor
 
 import uuid
@@ -111,8 +112,9 @@ class DeepFakesDataset(Dataset):
             image_size (int): 图片大小
             mode (str, optional): 当前的模式，训练集还是验证集. Defaults to 'train'.
         """
+        assert len(images_path) == len(labels)
         self.x = np.array([cv2.cvtColor(cv2.imread(
-            image_path), cv2.COLOR_BGR2RGB) for image_path in images_path])
+            image_path), cv2.COLOR_BGR2RGB) for image_path in tqdm(images_path)])
         self.y = torch.tensor(labels, dtype=torch.int)
         self.image_size = image_size
         self.mode = mode
@@ -127,7 +129,9 @@ class DeepFakesDataset(Dataset):
             transformer = valdata_augmentation_transformer(self.image_size)
         # 获取增强后图片
         image = transformer(image=image)['image']
-        return torch.tensor(image).float(), self.y[index]
+        # 转换为所需要图片形式 (c,h,w)
+        image = ToTensor()(image)
+        return image, self.y[index]
 
     def __len__(self):
         return self.n_samples

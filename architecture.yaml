@@ -8,6 +8,12 @@ training:
   rebalancing-fake: 0.3
   rebalancing-real: 1
   frames-per-video: 30 # Equidistant frames
+  train-data-percent: 0.8
+  worker-num: 2
+  checkpoint-interval: 10
+  checkpoint: true
+  start-epoch: 0
+  end-epoch: 100
 
 model:
   image-size: 224
@@ -32,4 +38,19 @@ model:
   sm-channels: 1280
   dropout: 0.15
   emb-dropout: 0.15
-  
+
+path:
+  video-dataset: './data/video'
+  video-label: './data/label/label.csv'
+  frame-json: './data/frameinfo'
+  frame-img: './data/frame'
+  checkpoint: './checkpoints'
+  log: './log'
+
+control:
+  have-face-json: true
+  have-face-img: true
+  testing: false
+  test-data-begin: 98000
+
+device: 'cuda:0'
