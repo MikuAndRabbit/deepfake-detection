@@ -150,7 +150,7 @@ def detect_faces_in_videos(dataset_path: str, detector_cls: Type[VideoFaceDetect
         video_path, indices, frames = item
         # 视频文件名作为其id
         video_id = os.path.basename(video_path[0]).split('.')[0]
-        logger.info('Start detect faces in video {}'.format(id(video_id)))
+        logger.info('Start detect faces in video {}'.format(video_id))
         # 丢掉frame没用的第一维，使其变为三维 (h, w, c)
         for i in range(len(frames)):
             frames[i] = squeeze(frames[i], dim = 0)
@@ -201,6 +201,7 @@ def crop_faces_single_video(video_path: str, frame_json_path: str, out_root: str
         id = os.path.basename(video_path).split('.')[0]
         out_dir = os.path.join(out_root, id)
         os.makedirs(out_dir, exist_ok=True)
+        logger.info('Create frame output folder at {}'.format(out_dir))
         
         # 打开视频
         capture = cv2.VideoCapture(video_path)
@@ -238,13 +239,16 @@ def crop_faces_single_video(video_path: str, frame_json_path: str, out_root: str
             # 保存裁剪的物体图片
             for frame_box_idx, crop in enumerate(crops):
                 cv2.imwrite(os.path.join(out_dir, "{}_{}.png".format(frame_idx, frame_box_idx)), crop)
+                logger.info('Crop picture from video {} at frame {}'.format(id, frame_idx))
         # 如果没有人脸的话就输出提醒一下
         if counter == 0:
-            print('No face detected in video {}, path is {}'.format(id, video_path))
+            logger.warning('No face detected in video {}, path is {}'.format(id, video_path))
             return False
         return True
     except Exception as e:
-        print("Error:", e)
+        logger.exception('Exception occured in crop face image from video {}'.format(video_path))
+        logger.exception('Exception info:')
+        logger.exception(e)
         return False
 
 
@@ -263,10 +267,10 @@ def crop_faces_videos(dataset_path: str, frames_json_path: str, out_root: str):
         
         frame_json_path = os.path.join(frames_json_path, id + '.json')
         if not os.path.exists(frame_json_path):
-            print('Detect result (json file) of video {} not found, video path is {}'.format(id, video_path))
+            logger.warning('Detect result (json file) of video {} not found, video path is {}'.format(id, video_path))
             continue
         res = crop_faces_single_video(video_path, frame_json_path, out_root)
         if res:
-            print('Video {} crop finished, path is {}'.format(id, video_path))
+            logger.info('Video {} crop finished, path is {}'.format(id, video_path))
         else:
-            print('Video {} crop failed, path is {}'.format(id, video_path))
+            logger.warning('Video {} crop failed, path is {}'.format(id, video_path))
